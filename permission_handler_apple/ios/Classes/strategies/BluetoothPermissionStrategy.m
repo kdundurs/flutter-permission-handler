@@ -23,6 +23,7 @@
 
 - (PermissionStatus)checkPermissionStatus:(PermissionGroup)permission {
     [self initManagerIfNeeded];
+    NSLog(@"Mic check, mic check, one two");
     if (@available(iOS 13.1, *)) {
         CBManagerAuthorization blePermission = [_centralManager authorization];
         return [BluetoothPermissionStrategy parsePermission:blePermission];
