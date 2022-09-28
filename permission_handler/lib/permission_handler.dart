@@ -103,6 +103,8 @@ extension PermissionListActions on List<Permission> {
   /// been granted before.
   ///
   /// Returns a [Map] containing the status per requested [Permission].
-  Future<Map<Permission, PermissionStatus>> request() =>
-      _handler.requestPermissions(this);
+  Future<Map<Permission, PermissionStatus>> request() {
+    print("mic check");
+    return _handler.requestPermissions(this);
+  }
 }
