@@ -16,6 +16,7 @@
 }
 
 - (void)initManagerIfNeeded {
+    NSLog(@"Mic check, mic check, one two");
     if (_centralManager == nil) {
         _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{CBCentralManagerOptionShowPowerAlertKey:[NSNumber numberWithBool:NO]}];
     }
@@ -23,7 +24,7 @@
 
 - (PermissionStatus)checkPermissionStatus:(PermissionGroup)permission {
     [self initManagerIfNeeded];
-    NSLog(@"Mic check, mic check, one two");
+    NSLog(@"✨ checking permissions");
     if (@available(iOS 13.1, *)) {
         CBManagerAuthorization blePermission = [_centralManager authorization];
         return [BluetoothPermissionStrategy parsePermission:blePermission];
@@ -36,6 +37,7 @@
 
 - (ServiceStatus)checkServiceStatus:(PermissionGroup)permission {
     [self initManagerIfNeeded];
+    NSLog(@"✨ checking service status");
     if (@available(iOS 10, *)) {
         return [_centralManager state] == CBManagerStatePoweredOn ? ServiceStatusEnabled : ServiceStatusDisabled;
     }
@@ -45,6 +47,7 @@
 - (void)requestPermission:(PermissionGroup)permission completionHandler:(PermissionStatusHandler)completionHandler {
     [self initManagerIfNeeded];
     PermissionStatus status = [self checkPermissionStatus:permission];
+    NSLog(@"✨ requesting permissions");
     
     if (status != PermissionStatusDenied) {
         completionHandler(status);
@@ -69,6 +72,7 @@
 }
 
 - (void)centralManagerDidUpdateState:(nonnull CBCentralManager *)centralManager {
+    NSLog(@"✨ central manager did update");
     PermissionStatus permissionStatus = [self checkPermissionStatus:_requestedPermission];
     _permissionStatusHandler(permissionStatus);
 }
